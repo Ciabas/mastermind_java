@@ -3,8 +3,20 @@
   <groupId>Artur</groupId>
   <artifactId>MasterMindMVN</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  
-  	<name>MasterMindMVN</name>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<name>MasterMindMVN</name>
 	<url>http://maven.apache.org</url>
   
   <!-- search for the latest version of dependencies in http://mvnrepository.com -->
