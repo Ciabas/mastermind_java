@@ -6,12 +6,12 @@
 	<build>
 		<plugins>
 			<plugin>
-                                <version>1.7</version>
+                                <version>2.5</version>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>2.5</source>
+					<target>2.5</target>
 				</configuration>
 			</plugin>
 		</plugins>
