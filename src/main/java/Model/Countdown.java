@@ -8,15 +8,15 @@ import javax.swing.JLabel;
 
 public class Countdown {
 	
-	private int timeLeft = 60;
-	private Timer timer = new Timer(0, null);
+    private int timeLeft = 60;
+    private Timer timer = new Timer(0, null);
     
     public int getTimeLeft() {
-            return timeLeft;
-	}
-	public void setTimeLeft(int timeLeft) {
-            this.timeLeft = timeLeft;
-	}
+        return timeLeft;
+    }
+    public void setTimeLeft(int timeLeft) {
+        this.timeLeft = timeLeft;
+    }
 	
     public void createAndStart(final JLabel label, final int timeInSec){
         this.timer = new Timer(1000, new ActionListener() {
