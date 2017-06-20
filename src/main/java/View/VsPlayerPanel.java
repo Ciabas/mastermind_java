@@ -117,7 +117,6 @@ public class VsPlayerPanel extends JPanel implements ActionListener {
 
     private void createBoardAndSetToMainView(int columns,int difficulty, String username){
         mainView.setBoard(new Board(columns, difficulty, username));
-        System.out.println("kolumny: " + columns + "trudnosc: " + difficulty + "nick: " + username);
         Color toRightOrder[] = new Color[columns];
         for(int j = 0; j < columns; j++){
                 toRightOrder[j] = buttons[j].getBackground();

@@ -86,7 +86,6 @@ public class VsComputerPanel extends JPanel {
 
     private void createBoardAndSetToMainView(int columns,int difficulty, String username){
         mainView.setBoard(new Board(columns, difficulty, username));
-        System.out.println("kolumny: " + columns + "trudnosc: " + difficulty + "nick: " + username);
         mainView.getBoard().getRightOrder().setOrder(mainView.getBoard().getRightOrder().randomColorsNoReps(columns));
     }
 }

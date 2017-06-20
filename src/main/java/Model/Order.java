@@ -51,7 +51,6 @@ public class Order {
             do {
                 random = rand.nextInt(colorNotUsed.length);
             } while (colorNotUsed[random] == null);
-            System.out.println("Dodalem: " + colorNotUsed[random].toString());
             colorRandomized[i] = colorNotUsed[random];
             colorNotUsed[random] = null;
         }
