@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 @SuppressWarnings("serial")
 public class MenuPanel extends JPanel {
 
-    private MainView mainView;
+    private final MainView mainView;
 
     public MenuPanel(MainView mainView) {
         this.mainView = mainView;
@@ -18,6 +18,7 @@ public class MenuPanel extends JPanel {
 
         JButton btnVsKomputer = new JButton("vs Komputer");
         btnVsKomputer.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 createAndChangeToVsComputerPanel();
             }
@@ -27,6 +28,7 @@ public class MenuPanel extends JPanel {
 
         JButton btnVsGracz = new JButton("vs Gracz");
         btnVsGracz.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 createAndChangeToVsPlayerPanel();
             }
@@ -37,13 +39,11 @@ public class MenuPanel extends JPanel {
 
     private void createAndChangeToVsComputerPanel(){
         VsComputerPanel vsComputer = new VsComputerPanel(mainView);
-        mainView.panelChanger(vsComputer, 200, 100);
+        mainView.panelChanger(vsComputer, 200, 80);
     }
 
     private void createAndChangeToVsPlayerPanel(){
-        System.out.println("wlazlem");
         VsPlayerPanel vsPlayer = new VsPlayerPanel(mainView);
-        System.out.println("stworzylem");
-        mainView.panelChanger(vsPlayer, 300, 100);
+        mainView.panelChanger(vsPlayer, 300, 50);
     }
 }

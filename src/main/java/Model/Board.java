@@ -59,7 +59,7 @@ public class Board {
         setColumnSizeToAll(columnSize, difficultyInt);
     }
 
-    public void setColumnSizeToAll(int columnSize, int difficultyInt){
+    private void setColumnSizeToAll(int columnSize, int difficultyInt){
         playerOrder.setColumnsNumber(columnSize);
         rightOrder.setColumnsNumber(columnSize);
         switch(difficultyInt){

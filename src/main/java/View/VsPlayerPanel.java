@@ -17,11 +17,11 @@ import Model.Board;
 @SuppressWarnings("serial")
 public class VsPlayerPanel extends JPanel implements ActionListener {
 
-    private MainView mainView;
+    private final MainView mainView;
     private JButton[] buttons;
     private int i = 0;
-    private Color[] colors = {Color.BLUE, Color.RED, Color.GREEN, Color.CYAN, Color.MAGENTA, Color.ORANGE, Color.YELLOW, Color.PINK};
-    private JTextField txtPlayerName;
+    private final Color[] colors = {Color.BLUE, Color.RED, Color.GREEN, Color.CYAN, Color.MAGENTA, Color.ORANGE, Color.YELLOW, Color.PINK};
+    private final JTextField txtPlayerName;
     private int columns;
     private int difficulty;
 
@@ -34,15 +34,15 @@ public class VsPlayerPanel extends JPanel implements ActionListener {
         add(lblPoziomTrudnoci);
 
         final JComboBox difficultyComboBox = new JComboBox();
-        difficultyComboBox.setBounds(261, 71, 59, 20);
+        difficultyComboBox.setBounds(261, 71, 95, 20);
         difficultyComboBox.setModel(new DefaultComboBoxModel(new String[] {"Łatwy", "Średni", "Trudny"}));
         add(difficultyComboBox);
 
         buttonsCreator();
 
-
         JButton btnNext = new JButton("Dalej");
         btnNext.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 mainView.getFrame().setVisible(false);
                 //JOptionPane.showMessageDialog(null, "Gracz 1 gotów na grę ?");
@@ -84,23 +84,30 @@ public class VsPlayerPanel extends JPanel implements ActionListener {
         }
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         JButton src = (JButton) e.getSource();
-         if(i >colors.length - 1){i = 0;}
-         src.setBackground(colors[i]);
-         i++;
+        if(i >colors.length - 1){
+            i = 0;
+        }
+        src.setBackground(colors[i]);
+        src.setForeground(colors[i]);
+        src.setOpaque(true);
+        src.setBorderPainted(false);
+        i++;
     }
 
     private void startButton(int columns, JComboBox difficultyComboBox){
-        int difficulty = 1;
-        String username = JOptionPane.showInputDialog("Gracz 1 \nPodaj swoj nick");
+        int difficultyLevel = 1;
+        String username;
+        username = JOptionPane.showInputDialog("Gracz 1 \nPodaj swoj nick");
         switch(difficultyComboBox.getSelectedItem().toString()){
-            case "Łatwy": difficulty = 1; break;
-            case "Średni": difficulty = 2; break;
-            case "Trudny": difficulty = 3; break;
+            case "Łatwy": difficultyLevel = 1; break;
+            case "Średni": difficultyLevel = 2; break;
+            case "Trudny": difficultyLevel = 3; break;
         }
-        this.difficulty = difficulty;
-        createBoardAndSetToMainView(columns, difficulty, username);
+        this.difficulty = difficultyLevel;
+        createBoardAndSetToMainView(columns, difficultyLevel, username);
     }
 
     private void createAndChangeToMainBoardPanel(){

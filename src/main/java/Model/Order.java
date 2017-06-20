@@ -6,7 +6,7 @@ import java.security.SecureRandom;
 
 public class Order {
     private int columnSize;
-    private Color[] colors = {Color.BLUE, Color.RED, Color.GREEN, Color.CYAN, Color.MAGENTA, Color.ORANGE, Color.YELLOW, Color.PINK};
+    private final Color[] colors = {Color.BLUE, Color.RED, Color.GREEN, Color.CYAN, Color.MAGENTA, Color.ORANGE, Color.YELLOW, Color.PINK};
     private Color[] order;
 
     public int getColumnsNumber() {
@@ -45,7 +45,8 @@ public class Order {
         Color[] colorNotUsed = this.colors.clone();
         Color[] colorRandomized = new Color[columnsNumber];
         int random ;
-        SecureRandom rand = new SecureRandom();
+        SecureRandom rand;
+        rand = new SecureRandom();
         for(int i = 0; i < columnsNumber; i++){
             do {
                 random = rand.nextInt(colorNotUsed.length);
@@ -79,12 +80,7 @@ public class Order {
     public boolean[] checkSpots(Order comparingOrder, Order rightOrder){
         boolean[] result = new boolean[comparingOrder.getOrder().length];
         for (int i = 0; i < comparingOrder.getOrder().length; i++){
-            if (comparingOrder.getOrder()[i].equals(rightOrder.getOrder()[i])){
-                result[i] = true;   
-            }
-            else {
-                result[i] = false;
-            }
+            result[i] = comparingOrder.getOrder()[i].equals(rightOrder.getOrder()[i]);
         }
         return result;
     }

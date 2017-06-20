@@ -21,6 +21,7 @@ public class Countdown {
     public void createAndStart(final JLabel label, final int timeInSec){
         this.timer = new Timer(1000, new ActionListener() {
             private int count = timeInSec;
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (count <= 0) {
                     label.setText("KONIEC");

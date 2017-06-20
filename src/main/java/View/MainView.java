@@ -32,6 +32,7 @@ public class MainView {
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 try {
                     MainView window = new MainView();
@@ -55,7 +56,7 @@ public class MainView {
 
     private void createAndChangeToMenuPanel(){
         MenuPanel menu = new MenuPanel(this);
-        panelChanger(menu, 100, 50);
+        panelChanger(menu, 80, 30);
     }
 
     public void panelChanger(JPanel panel, int x, int y){

@@ -4,17 +4,14 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
-
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 import Model.Order;
-
-@SuppressWarnings("serial")
+@
+SuppressWarnings("serial")
 public class MainBoardPanel extends JPanel implements ActionListener {
 
     private MainView mainView;
@@ -35,7 +32,8 @@ public class MainBoardPanel extends JPanel implements ActionListener {
         mainView.getBoard().getCountdown().createAndStart(label, mainView.getBoard().getDifficulty().getTime());
 
 
-        final JLabel statusAttemps = new JLabel("Pozostało prób " + (mainView.getBoard().getDifficulty().getAttempts() - playersattemps));
+        final JLabel statusAttemps;
+        statusAttemps = new JLabel("Pozostało prób " + (mainView.getBoard().getDifficulty().getAttempts() - playersattemps));
         statusAttemps.setBounds(400, 30, 100, 30);
         add(statusAttemps);
 
@@ -44,10 +42,12 @@ public class MainBoardPanel extends JPanel implements ActionListener {
 
         JButton btnSprawdz = new JButton("Sprawdz");
         btnSprawdz.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (playersattemps == mainView.getBoard().getDifficulty().getAttempts()){
                     JOptionPane.showMessageDialog(null, "Koniec gry. \nLimit prób przekroczony");
                     mainView.getBoard().getCountdown().stop();
+                    throw new Exception("KONIEC WIN");
                     return;
                 }
                 playersattemps += 1;
@@ -87,16 +87,17 @@ public class MainBoardPanel extends JPanel implements ActionListener {
     private void buttonsCreator(int y){
         int columns = mainView.getBoard().getRightOrder().getColumnsNumber();
         buttons = new JButton[columns];
-        for (int i = 0; i < columns; i++){
+        for (int j = 0; j < columns; j++){
             JButton btn = new JButton("");
-            buttons[i] = btn;
+            buttons[j] = btn;
             btn.addActionListener(this);
 
-            btn.setBounds(50+(34*i), y, 30, 30);
+            btn.setBounds(50+(34*j), y, 30, 30);
             add(btn);
         }
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         JButton src = (JButton) e.getSource();
         if (i > colors.length - 1){

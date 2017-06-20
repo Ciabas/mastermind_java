@@ -3,6 +3,7 @@ package Model;
 import static org.junit.Assert.*;
 
 import java.awt.Color;
+import org.junit.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,14 +29,14 @@ public class OrderTest {
         Order actual = new Order(colors.length, colors);
         //then
         assertEquals(expected.getColumnsNumber(), actual.getColumnsNumber());
-        assertEquals(expected.getOrder(), actual.getOrder());
+        Assert.assertArrayEquals(expected.getOrder(), actual.getOrder());
     }
 
     @Test
     public void shouldCreateRandomizedTableOfColorsWithoutRepetition() {
         //given
         int columns = 8;
-        Color[] colorsTable = new Color[columns];
+        Color[] colorsTable;
         Order order = new Order();
         //when
         colorsTable = order.randomColorsNoReps(columns);
