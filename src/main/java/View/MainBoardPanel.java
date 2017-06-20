@@ -1,5 +1,7 @@
 package View;
 
+import Exception.LoseGameException;
+import Exception.WinGameException;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +12,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import Model.Order;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 @
 SuppressWarnings("serial")
 public class MainBoardPanel extends JPanel implements ActionListener {
@@ -34,7 +38,7 @@ public class MainBoardPanel extends JPanel implements ActionListener {
 
         final JLabel statusAttemps;
         statusAttemps = new JLabel("Pozostało prób " + (mainView.getBoard().getDifficulty().getAttempts() - playersattemps));
-        statusAttemps.setBounds(400, 30, 100, 30);
+        statusAttemps.setBounds(400, 30, 140, 30);
         add(statusAttemps);
 
 
@@ -44,39 +48,52 @@ public class MainBoardPanel extends JPanel implements ActionListener {
         btnSprawdz.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (playersattemps == mainView.getBoard().getDifficulty().getAttempts()){
-                    JOptionPane.showMessageDialog(null, "Koniec gry. \nLimit prób przekroczony");
-                    mainView.getBoard().getCountdown().stop();
-                    throw new Exception("KONIEC WIN");
-                    return;
-                }
-                playersattemps += 1;
-                Order playerOrder = mainView.getBoard().getPlayerOrder();
-                Order rightOrder = mainView.getBoard().getRightOrder();
-                int columns =  mainView.getBoard().getRightOrder().getColumnsNumber();
-                Color playerOrderColors[] = new Color[columns];
-                for (int j = 0; j < columns; j++){
-                    playerOrderColors[j] = buttons[j].getBackground();
-                    buttons[j].setEnabled(false);
-                }
-                mainView.getBoard().getPlayerOrder().setOrder(playerOrderColors);
-                int amountOfRightColors = mainView.getBoard().getPlayerOrder().checkColors(playerOrder, rightOrder);
-                boolean[] checkForRightSpots = mainView.getBoard().getPlayerOrder().checkSpots(playerOrder, rightOrder);
+                try{
+                    if (playersattemps == mainView.getBoard().getDifficulty().getAttempts()){
+                        JOptionPane.showMessageDialog(null, "Koniec gry. \nLimit prób przekroczony");
+                        mainView.getBoard().getCountdown().stop();
+                        throw new LoseGameException();
+                    }
+                    playersattemps += 1;
+                    Order playerOrder = mainView.getBoard().getPlayerOrder();
+                    Order rightOrder = mainView.getBoard().getRightOrder();
+                    int columns =  mainView.getBoard().getRightOrder().getColumnsNumber();
+                    Color playerOrderColors[] = new Color[columns];
+                    for (int j = 0; j < columns; j++){
+                        playerOrderColors[j] = buttons[j].getBackground();
+                        buttons[j].setEnabled(false);
+                    }
+                    mainView.getBoard().getPlayerOrder().setOrder(playerOrderColors);
+                    int amountOfRightColors = mainView.getBoard().getPlayerOrder().checkColors(playerOrder, rightOrder);
+                    boolean[] checkForRightSpots = mainView.getBoard().getPlayerOrder().checkSpots(playerOrder, rightOrder);
 
-                JLabel check = new JLabel(Arrays.toString(checkForRightSpots).trim() + " Kolory: " + amountOfRightColors);
-                check.setBounds(50, y+25, 400, 20);
-                add(check);
-                if (playerOrder.compareWith(rightOrder.getOrder()) == true){
-                    mainView.getBoard().getCountdown().stop();
-                    JOptionPane.showMessageDialog(null, "Udało Ci się, gratulacje.");
+                    JLabel check = new JLabel(Arrays.toString(checkForRightSpots).trim() + " Kolory: " + amountOfRightColors);
+                    check.setBounds(50, y+25, 400, 20);
+                    add(check);
+                    if (playerOrder.compareWith(rightOrder.getOrder()) == true){
+                        mainView.getBoard().getCountdown().stop();
+                        JOptionPane.showMessageDialog(null, "Udało Ci się, gratulacje.");
+                        throw new WinGameException();
+                    }
+
+                    statusAttemps.setText("Pozostało prób " + (mainView.getBoard().getDifficulty().getAttempts() - playersattemps));
+
+                    y +=55;
+                    buttonsCreator(y);
+                    mainView.getFrame().validate();
+                    mainView.getFrame().repaint();
                 }
-
-                statusAttemps.setText("Pozostało prób " + (mainView.getBoard().getDifficulty().getAttempts() - playersattemps));
-
-                y +=55;
-                buttonsCreator(y);
-                mainView.getFrame().validate();
-                mainView.getFrame().repaint();
+                catch(LoseGameException error){
+                    mainView.showLeaderBoard();
+                    System.exit(0);
+                }
+                catch (WinGameException ex) {
+                    String user = mainView.getBoard().getUsername();
+                    int points = (mainView.getBoard().getDifficulty().getAttempts() - playersattemps) * mainView.getBoard().getCountdown().getTimeLeft() * mainView.getBoard().getRightOrder().getColumnsNumber() ;
+                    mainView.getBoard().getScore().saveToFile(user, points);
+                    mainView.showLeaderBoard();
+                    System.exit(0);
+                }
             }
         });
         btnSprawdz.setBounds(400, 15, 90, 25);

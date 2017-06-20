@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import Model.Board;
+import javax.swing.JOptionPane;
 
 public class MainView {
 
@@ -65,5 +66,9 @@ public class MainView {
         frame.setContentPane(panel);
         frame.setBounds(200, 200, x, y);
         SwingUtilities.updateComponentTreeUI(frame);
+    }
+    
+    public void showLeaderBoard(){
+        JOptionPane.showMessageDialog(null, board.getScore().loadFromFile(), "Tablica wyników", JOptionPane.PLAIN_MESSAGE);
     }
 }

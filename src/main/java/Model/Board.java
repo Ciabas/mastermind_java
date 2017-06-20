@@ -8,6 +8,7 @@ public class Board {
     private Difficulty difficulty;
     private Countdown countdown;
     private Score score;
+    private String username; 
 
 
     public Order getPlayerOrder() {
@@ -16,6 +17,10 @@ public class Board {
 
     public void setPlayerOrder(Order playerOrder) {
         this.playerOrder = playerOrder;
+    }
+    
+    public String getUsername() {
+        return username;
     }
 
     public Order getRightOrder() {
@@ -55,7 +60,8 @@ public class Board {
         this.rightOrder = new Order();
         this.difficulty = new Difficulty();
         this.countdown = new Countdown();
-        this.score = new Score(username);
+        this.score = new Score();
+        this.username = username;
         setColumnSizeToAll(columnSize, difficultyInt);
     }
 
