@@ -6,6 +6,7 @@
 	<build>
 		<plugins>
 			<plugin>
+                                <version>1.7</version>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
